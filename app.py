@@ -7,7 +7,7 @@ import os, random, textwrap, urllib.parse
 
 # ================= CONFIG =================
 LOVE_PASSWORD = "27-04-2025"
-KARTHIK_WHATSAPP = "91XXXXXXXXXX"  # <-- PUT YOUR NUMBER (NO +)
+KARTHIK_WHATSAPP = "7780265835"  # <-- PUT YOUR NUMBER (NO +)
 
 st.set_page_config(page_title="Only For Bujji ❤️", layout="centered")
 
@@ -89,7 +89,7 @@ if st.session_state.show_memories and os.path.exists("photos"):
     photos = sorted([p for p in os.listdir("photos") if p.lower().endswith(("jpg","png","jpeg","webp"))])
 
     quotes = [
-        "The moment my heart choose you ❤️",
+        "The moment my heart felt you always mine❤️",
         "Every smile of yours heals me 💕",
         "Be with me like this 🌸",
         "Love looks perfect when it’s you 💖",
@@ -174,7 +174,7 @@ if st.button("💝 Create & Download Agreement PDF"):
         # Terms
         y = 720
         pdf.setFont("Helvetica-Bold", 16)
-        pdf.drawString(50, y, "💖 Funny & Romantic Agreement Terms:")
+        pdf.drawString(50, y, "💖 Love & Romantic Agreement Terms:")
         y -= 30
 
         pdf.setFont("Helvetica", 14)
@@ -183,11 +183,11 @@ if st.button("💝 Create & Download Agreement PDF"):
             "2. If promises are broken → 100,000 trillion love fine 💸",
             "   (Fine payable only in hugs, cuddles & love 😄)",
             "3. Missing a good morning message → Unlimited forehead kisses 😘",
-            "4. Fighting without reason → Sorry + tight hug mandatory 🤗",
+            "4. Fighting without reason → Kiss + tight hug mandatory 🤗",
             "5. Agreement validity → Lifetime + all next lifetimes ♾️",
             "6. Court of law → Only our hearts ❤️",
             "",
-            "⚠️ Note: This agreement is made with love & comedy only 😄"
+            "⚠️ Note: This agreement is made with love & affection only 😄"
         ]
 
         for t in terms:
@@ -238,3 +238,4 @@ if st.session_state.pdf_ready:
 # ================= FOOTER =================
 st.markdown("---")
 st.markdown("🌈 **Made with endless love — Karthik** 💍❤️")
+
