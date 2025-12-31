@@ -3,14 +3,16 @@ from PIL import Image
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from streamlit_drawable_canvas import st_canvas
-import os, random, textwrap
+import os, random, textwrap, urllib.parse
 
 # ================= CONFIG =================
 LOVE_PASSWORD = "27-04-2025"
+KARTHIK_WHATSAPP = "91XXXXXXXXXX"  # <-- PUT YOUR NUMBER (NO +)
+
 st.set_page_config(page_title="Only For Bujji ❤️", layout="centered")
 
 # ================= SESSION STATES =================
-for key in ["unlock", "show_memories", "said_yes", "love_message"]:
+for key in ["unlock", "show_memories", "said_yes", "love_message", "pdf_ready"]:
     if key not in st.session_state:
         st.session_state[key] = False if key != "love_message" else ""
 
@@ -19,7 +21,13 @@ if not st.session_state.unlock:
     st.markdown("""
     <style>
     body {background: linear-gradient(135deg,#ff9a9e,#fad0c4);}
-    .lock {background:rgba(255,255,255,0.6);padding:30px;border-radius:25px;text-align:center;}
+    .lock {
+        background:rgba(255,255,255,0.6);
+        padding:30px;
+        border-radius:25px;
+        text-align:center;
+        box-shadow:0 15px 40px rgba(0,0,0,0.3);
+    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -40,21 +48,28 @@ st.markdown("""
 body {background: linear-gradient(135deg,#ffecd2,#fcb69f);}
 
 @keyframes fall {
-  0% {top:-10%; opacity:1;}
+  0% {top:-10%; opacity:0;}
+  10% {opacity:1;}
   100% {top:110%; opacity:0;}
 }
 
 .love-fall {
   position:fixed;
   top:-10%;
-  font-size:20px;
-  color:#FFD700; /* Yellow */
+  font-size:22px;
+  color:#FFD700;
   font-weight:bold;
-  text-shadow: 0 0 8px rgba(255,215,0,0.8);
+  text-shadow:0 0 10px rgba(255,215,0,0.9);
   animation:fall linear infinite;
 }
 
-.gallery {display:flex;overflow-x:auto;gap:25px;}
+.gallery {
+  display:flex;
+  overflow-x:auto;
+  gap:25px;
+  padding:15px;
+}
+
 .card {
   min-width:260px;
   background:linear-gradient(135deg,#ff9a9e,#fad0c4);
@@ -62,11 +77,13 @@ body {background: linear-gradient(135deg,#ffecd2,#fcb69f);}
   padding:12px;
   box-shadow:0 15px 30px rgba(0,0,0,0.3);
 }
+
 .quote {
   text-align:center;
   font-style:italic;
   color:#7a003c;
   font-weight:600;
+  margin-top:8px;
 }
 
 .glass {
@@ -84,6 +101,7 @@ body {background: linear-gradient(135deg,#ffecd2,#fcb69f);}
   font-size:18px!important;
   padding:12px 30px!important;
   box-shadow:0 0 25px #ff4d6d;
+  border:none!important;
 }
 
 .arrow {
@@ -126,11 +144,10 @@ body {background: linear-gradient(135deg,#ffecd2,#fcb69f);}
 </style>
 """, unsafe_allow_html=True)
 
-# ================= FALLING LOVE TEXT =================
+# ================= FALLING LOVE =================
 for _ in range(18):
     st.markdown(
-        f"<div class='love-fall' style='left:{random.randint(0,100)}%;"
-        f"animation-duration:{random.randint(6,12)}s;'>I Love You ❤️</div>",
+        f"<div class='love-fall' style='left:{random.randint(0,100)}%;animation-duration:{random.randint(6,12)}s;'>I Love You ❤️</div>",
         unsafe_allow_html=True
     )
 
@@ -152,30 +169,29 @@ if st.button("📸 Our Memories"):
 st.markdown('</div>', unsafe_allow_html=True)
 
 if st.session_state.show_memories and os.path.exists("photos"):
-    base_quotes = [
-        "The day my heart found its home ❤️",
-        "Your smile is my favorite place 💕",
-        "This moment lives forever in my soul ✨",
-        "Your presence make my day special 💖",
-        "Every memory with you is precious 🥹",
-        "Love looks beautiful when it’s you 🌸",
-        "Be with me like this",
-        "Forever starts with moments like this ❤️",
-        "My heart chose you silently 💫",
-        "Every picture holds a promise 💍"
+    photos = sorted([p for p in os.listdir("photos") if p.lower().endswith(("jpg","png","jpeg","webp"))])
+
+    quotes = [
+        "The moment my heart chose you ❤️",
+        "Every smile of yours heals me 💕",
+        "Be with me like this 🌸",
+        "Love looks perfect when it’s you 💖",
+        "My favorite place is beside you 🥹",
+        "You make my world softer 💫",
+        "Every memory with you is precious ✨",
+        "I see forever in your eyes 💍",
+        "You are my home ❤️",
+        "With you, life feels complete 🌈"
     ]
 
-    photos = [p for p in os.listdir("photos") if p.lower().endswith(("jpg","png","jpeg","webp"))]
-
-    # generate extra unique quotes if photos > quotes
-    while len(base_quotes) < len(photos):
-        base_quotes.append(f"My heart beats for you more each day ❤️ {len(base_quotes)+1}")
+    if len(quotes) < len(photos):
+        quotes += [f"You are my forever memory ❤️ {i}" for i in range(len(photos) - len(quotes))]
 
     st.markdown('<div class="gallery">', unsafe_allow_html=True)
-    for i, photo in enumerate(photos):
+    for photo, quote in zip(photos, quotes):
         st.markdown('<div class="card">', unsafe_allow_html=True)
         st.image(Image.open(f"photos/{photo}"), use_container_width=True)
-        st.markdown(f"<div class='quote'>{base_quotes[i]}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='quote'>{quote}</div>", unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -183,13 +199,12 @@ if st.session_state.show_memories and os.path.exists("photos"):
 st.markdown("## 💍 My Question")
 st.markdown("""
 <div class="glass">
-I promise my love, loyalty, care, affection and support ❤️<br>
-Not just today — but forever Bujjilu ❤️<br><br>
+I promise my love, care, respect, loyalty and support.<br>
+Not just today — but every day, Bujji ❤️<br><br>
 <b>Will you walk with me through this New Year and all the years ahead?</b>
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown('<div class="arrow">⬆️ Click YES from your heart ⬆️</div>', unsafe_allow_html=True)
 st.markdown('<div class="neon">', unsafe_allow_html=True)
 if st.button("💖 YES"):
     st.session_state.said_yes = True
@@ -198,24 +213,23 @@ st.markdown('</div>', unsafe_allow_html=True)
 # ================= YES EFFECT =================
 if st.session_state.said_yes:
     st.markdown("<div class='heartbeat'>❤️</div>", unsafe_allow_html=True)
+
     st.markdown("""
     <div class="yes-message">
     You didn’t just click YES…<br><br>
-    You chose *us*, *love*, and *forever* 💍❤️<br><br>
-    Thank you for trusting my heart with yours, Bujji.<br>
-    <b>I promise to choose you every single day.</b>
+    You choose *us*, *love*, and *forever* 💍❤️<br><br>
+    I promise to choose you every single day Bujjilu.
     </div>
     """, unsafe_allow_html=True)
 
-    st.subheader("💌 Message From Your Heart")
     st.session_state.love_message = st.text_area(
-        "Write something for Karthik 💕",
-        placeholder="Write your feelings here..."
+        "💌 Write something for Karthik",
+        placeholder="Your words will be saved in our forever agreement..."
     )
 
 # ================= SIGNATURE =================
-st.subheader("✍️ Your Signature")
-name = st.text_input("Your Name 💕", "Bujji")
+st.subheader("✍️ Sign Our Love Agreement")
+name = st.text_input("Your Name", "Bujji")
 
 canvas_result = st_canvas(
     stroke_width=3,
@@ -227,24 +241,44 @@ canvas_result = st_canvas(
 )
 
 # ================= PDF =================
-if st.button("💝 Download Our Forever Promise"):
+if st.button("💝 Create & Download Agreement PDF"):
     if canvas_result.image_data is not None:
         Image.fromarray(canvas_result.image_data.astype("uint8")).save("signature.png")
+
         pdf = canvas.Canvas("Forever_With_You.pdf", pagesize=A4)
         pdf.setFont("Helvetica-Bold", 26)
         pdf.drawCentredString(300, 800, "FOREVER WITH YOU 💍")
         pdf.setFont("Helvetica", 14)
-        pdf.drawString(50, 740, "Karthik ❤️ Bujji")
-        y = 700
+        pdf.drawString(50, 760, "Karthik ❤️ Bujji")
+
+        y = 720
         for line in textwrap.wrap(st.session_state.love_message, 80):
             pdf.drawString(50, y, line)
             y -= 18
-        pdf.drawImage("signature.png", 50, y-120, width=240, height=120)
+
+        pdf.drawString(50, y-20, f"Signed by: {name}")
+        pdf.drawImage("signature.png", 50, y-150, width=240, height=120)
         pdf.save()
 
-        with open("Forever_With_You.pdf", "rb") as f:
-            st.download_button("⬇️ Download Forever PDF", f)
+        st.session_state.pdf_ready = True
+
+# ================= DOWNLOAD & WHATSAPP =================
+if st.session_state.pdf_ready:
+    with open("Forever_With_You.pdf", "rb") as f:
+        st.download_button("⬇️ Download Signed Agreement (PDF)", f)
+
+    message = "I signed our love agreement ❤️\nThis New Year I choose YOU 💍\nForever yours,\nBujji 💕"
+    encoded = urllib.parse.quote(message)
+    whatsapp_link = f"https://wa.me/{KARTHIK_WHATSAPP}?text={encoded}"
+
+    st.markdown(f"""
+    <div class="neon" style="text-align:center;">
+      <a href="{whatsapp_link}" target="_blank">
+        <button>💚 Send Agreement Message to Karthik (WhatsApp)</button>
+      </a>
+    </div>
+    """, unsafe_allow_html=True)
 
 # ================= FOOTER =================
-st.markdown("---\n🌈 **Made with endless love — Karthik** 💍❤️")
-
+st.markdown("---")
+st.markdown("🌈 **Made with endless love — Karthik** 💍❤️")
