@@ -47,6 +47,41 @@ st.markdown("""
 <style>
 body {background: linear-gradient(135deg,#ffecd2,#fcb69f);}
 
+@keyframes glow {
+  0% {box-shadow:0 0 10px #ff4d6d;}
+  50% {box-shadow:0 0 35px #ff0844;}
+  100% {box-shadow:0 0 10px #ff4d6d;}
+}
+
+.glow-yes button {
+  animation:glow 1.2s infinite;
+}
+
+@keyframes confetti {
+  0% {top:-10%; transform:rotate(0deg);}
+  100% {top:110%; transform:rotate(360deg);}
+}
+
+.confetti {
+  position:fixed;
+  top:-10%;
+  font-size:22px;
+  animation:confetti linear infinite;
+}
+
+@keyframes sparkle {
+  0% {opacity:0;}
+  50% {opacity:1;}
+  100% {opacity:0;}
+}
+
+.ring {
+  font-size:80px;
+  text-align:center;
+  animation:sparkle 1.5s infinite;
+}
+
+
 @keyframes fall {
   0% {top:-10%; opacity:0;}
   10% {opacity:1;}
@@ -205,12 +240,19 @@ Not just today — but every day, Bujji ❤️<br><br>
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown('<div class="neon">', unsafe_allow_html=True)
+st.markdown('<div class="neon glow-yes">', unsafe_allow_html=True)
 if st.button("💖 YES"):
     st.session_state.said_yes = True
 st.markdown('</div>', unsafe_allow_html=True)
 
 # ================= YES EFFECT =================
+st.markdown("<div class='ring'>💍✨</div>", unsafe_allow_html=True)
+
+for _ in range(30):
+    st.markdown(
+        f"<div class='confetti' style='left:{random.randint(0,100)}%;animation-duration:{random.randint(4,8)}s;'>💖</div>",
+        unsafe_allow_html=True
+    )
 if st.session_state.said_yes:
     st.markdown("<div class='heartbeat'>❤️</div>", unsafe_allow_html=True)
 
@@ -271,6 +313,27 @@ if st.session_state.pdf_ready:
     file_name="Forever_With_You.pdf",
     mime="application/pdf"
 )
+st.markdown("### 📱 Send This to Karthik on WhatsApp 💕")
+st.markdown(
+    f"""
+    <a href="{whatsapp_link()}" target="_blank">
+        <button style="
+            background:linear-gradient(135deg,#25D366,#128C7E);
+            color:white;
+            border:none;
+            padding:14px 26px;
+            border-radius:30px;
+            font-size:18px;
+            box-shadow:0 0 25px #25D366;
+            cursor:pointer;
+        ">
+        💬 Send on WhatsApp
+        </button>
+    </a>
+    """,
+    unsafe_allow_html=True
+)
+
 import urllib.parse
 
 def whatsapp_link():
@@ -304,6 +367,7 @@ Love you endlessly ❤️
 # ================= FOOTER =================
 st.markdown("---")
 st.markdown("🌈 **Made with endless love — Karthik** 💍❤️")
+
 
 
 
