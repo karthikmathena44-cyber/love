@@ -271,6 +271,23 @@ if st.session_state.pdf_ready:
     file_name="Forever_With_You.pdf",
     mime="application/pdf"
 )
+import urllib.parse
+
+def whatsapp_link():
+    msg = """
+Hey my love ❤️
+
+I just signed our forever promise 💍✨  
+This means more than words can say.
+
+Here is our agreement PDF 📄💕  
+Please save it safely — it’s our memory forever.
+
+Love you endlessly ❤️
+– Bujji
+"""
+    encoded = urllib.parse.quote(msg)
+    return f"https://wa.me/917780265835?text={encoded}"
 
     message = "I signed our love agreement ❤️\nThis New Year I choose YOU 💍\nForever yours,\nBujji 💕"
     encoded = urllib.parse.quote(message)
@@ -287,5 +304,6 @@ if st.session_state.pdf_ready:
 # ================= FOOTER =================
 st.markdown("---")
 st.markdown("🌈 **Made with endless love — Karthik** 💍❤️")
+
 
 
