@@ -46,101 +46,18 @@ if not st.session_state.unlock:
 st.markdown("""
 <style>
 body {background: linear-gradient(135deg,#ffecd2,#fcb69f);}
-
-@keyframes fall {
-  0% {top:-10%; opacity:0;}
-  10% {opacity:1;}
-  100% {top:110%; opacity:0;}
-}
-
-.love-fall {
-  position:fixed;
-  top:-10%;
-  font-size:22px;
-  color:#FFD700;
-  font-weight:bold;
-  text-shadow:0 0 10px rgba(255,215,0,0.9);
-  animation:fall linear infinite;
-}
-
-.gallery {
-  display:flex;
-  overflow-x:auto;
-  gap:25px;
-  padding:15px;
-}
-
-.card {
-  min-width:260px;
-  background:linear-gradient(135deg,#ff9a9e,#fad0c4);
-  border-radius:25px;
-  padding:12px;
-  box-shadow:0 15px 30px rgba(0,0,0,0.3);
-}
-
-.quote {
-  text-align:center;
-  font-style:italic;
-  color:#7a003c;
-  font-weight:600;
-  margin-top:8px;
-}
-
-.glass {
-  background:rgba(255,255,255,0.6);
-  backdrop-filter:blur(12px);
-  border-radius:30px;
-  padding:30px;
-  box-shadow:0 20px 45px rgba(0,0,0,0.25);
-}
-
-.neon button {
-  background:linear-gradient(135deg,#ff0844,#ffb199)!important;
-  color:white!important;
-  border-radius:30px!important;
-  font-size:18px!important;
-  padding:12px 30px!important;
-  box-shadow:0 0 25px #ff4d6d;
-  border:none!important;
-}
-
-.arrow {
-  text-align:center;
-  font-size:26px;
-  animation:bounce 1.2s infinite;
-  color:#ff0844;
-}
-
-@keyframes bounce {
-  0%,100% {transform:translateY(0)}
-  50% {transform:translateY(-10px)}
-}
-
-.heartbeat {
-  font-size:90px;
-  text-align:center;
-  color:#ff0844;
-  animation:beat 1s infinite;
-}
-
-@keyframes beat {
-  0%{transform:scale(1)}
-  25%{transform:scale(1.2)}
-  40%{transform:scale(1)}
-  60%{transform:scale(1.3)}
-  100%{transform:scale(1)}
-}
-
-.yes-message {
-  background:linear-gradient(135deg,#ffdde1,#ee9ca7);
-  padding:30px;
-  border-radius:30px;
-  font-size:20px;
-  font-weight:600;
-  color:#7a003c;
-  text-align:center;
-  box-shadow:0 20px 40px rgba(0,0,0,0.3);
-}
+@keyframes fall {0% {top:-10%; opacity:0;} 10% {opacity:1;} 100% {top:110%; opacity:0;}}
+.love-fall {position:fixed; top:-10%; font-size:22px; color:#FFD700; font-weight:bold; text-shadow:0 0 10px rgba(255,215,0,0.9); animation:fall linear infinite;}
+.gallery {display:flex; overflow-x:auto; gap:25px; padding:15px;}
+.card {min-width:260px; background:linear-gradient(135deg,#ff9a9e,#fad0c4); border-radius:25px; padding:12px; box-shadow:0 15px 30px rgba(0,0,0,0.3);}
+.quote {text-align:center; font-style:italic; color:#7a003c; font-weight:600; margin-top:8px;}
+.glass {background:rgba(255,255,255,0.6); backdrop-filter:blur(12px); border-radius:30px; padding:30px; box-shadow:0 20px 45px rgba(0,0,0,0.25);}
+.neon button {background:linear-gradient(135deg,#ff0844,#ffb199)!important; color:white!important; border-radius:30px!important; font-size:18px!important; padding:12px 30px!important; box-shadow:0 0 25px #ff4d6d; border:none!important;}
+.arrow {text-align:center; font-size:26px; animation:bounce 1.2s infinite; color:#ff0844;}
+@keyframes bounce {0%,100% {transform:translateY(0)} 50% {transform:translateY(-10px)}}
+.heartbeat {font-size:90px; text-align:center; color:#ff0844; animation:beat 1s infinite;}
+@keyframes beat {0%{transform:scale(1)} 25%{transform:scale(1.2)} 40%{transform:scale(1)} 60%{transform:scale(1.3)} 100%{transform:scale(1)}}
+.yes-message {background:linear-gradient(135deg,#ffdde1,#ee9ca7); padding:30px; border-radius:30px; font-size:20px; font-weight:600; color:#7a003c; text-align:center; box-shadow:0 20px 40px rgba(0,0,0,0.3);}
 </style>
 """, unsafe_allow_html=True)
 
@@ -246,31 +163,65 @@ if st.button("💝 Create & Download Agreement PDF"):
         Image.fromarray(canvas_result.image_data.astype("uint8")).save("signature.png")
 
         pdf = canvas.Canvas("Forever_With_You.pdf", pagesize=A4)
-        pdf.setFont("Helvetica-Bold", 26)
-        pdf.drawCentredString(300, 800, "FOREVER WITH YOU 💍")
-        pdf.setFont("Helvetica", 14)
-        pdf.drawString(50, 760, "Karthik ❤️ Bujji")
 
+        # Title
+        pdf.setFont("Helvetica-Bold", 26)
+        pdf.drawCentredString(300, 800, "FOREVER LOVE AGREEMENT 💍")
+
+        pdf.setFont("Helvetica", 15)
+        pdf.drawCentredString(300, 770, "Between Karthik ❤️ Bujji")
+
+        # Terms
         y = 720
+        pdf.setFont("Helvetica-Bold", 16)
+        pdf.drawString(50, y, "💖 Funny & Romantic Agreement Terms:")
+        y -= 30
+
+        pdf.setFont("Helvetica", 14)
+        terms = [
+            "1. If time is not given properly → 10,000 kisses penalty 💋",
+            "2. If promises are broken → 100,000 trillion love fine 💸",
+            "   (Fine payable only in hugs, cuddles & love 😄)",
+            "3. Missing a good morning message → Unlimited forehead kisses 😘",
+            "4. Fighting without reason → Sorry + tight hug mandatory 🤗",
+            "5. Agreement validity → Lifetime + all next lifetimes ♾️",
+            "6. Court of law → Only our hearts ❤️",
+            "",
+            "⚠️ Note: This agreement is made with love & comedy only 😄"
+        ]
+
+        for t in terms:
+            pdf.drawString(50, y, t)
+            y -= 20
+
+        # Love Message
+        y -= 10
+        pdf.setFont("Helvetica-Bold", 15)
+        pdf.drawString(50, y, "💌 Message from the Heart:")
+        y -= 25
+
+        pdf.setFont("Helvetica", 14)
         for line in textwrap.wrap(st.session_state.love_message, 80):
             pdf.drawString(50, y, line)
             y -= 18
 
-        pdf.drawString(50, y-20, f"Signed by: {name}")
-        pdf.drawImage("signature.png", 50, y-150, width=240, height=120)
-        pdf.save()
+        # Signature
+        y -= 20
+        pdf.drawString(50, y, f"Signed by: {name}")
+        pdf.drawImage("signature.png", 50, y-140, width=240, height=120)
 
+        pdf.save()
         st.session_state.pdf_ready = True
 
 # ================= DOWNLOAD & WHATSAPP =================
 if st.session_state.pdf_ready:
     with open("Forever_With_You.pdf", "rb") as f:
         st.download_button(
-    label="⬇️ Download Signed Agreement (PDF)",
-    data=f,
-    file_name="Forever_With_You.pdf",
-    mime="application/pdf"
-)
+            label="⬇️ Download Signed Agreement (PDF)",
+            data=f,
+            file_name="Forever_With_You.pdf",
+            mime="application/pdf"
+        )
 
     message = "I signed our love agreement ❤️\nThis New Year I choose YOU 💍\nForever yours,\nBujji 💕"
     encoded = urllib.parse.quote(message)
@@ -287,4 +238,3 @@ if st.session_state.pdf_ready:
 # ================= FOOTER =================
 st.markdown("---")
 st.markdown("🌈 **Made with endless love — Karthik** 💍❤️")
-
