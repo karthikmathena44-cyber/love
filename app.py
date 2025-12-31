@@ -7,36 +7,23 @@ import os, random, textwrap
 
 # ================= CONFIG =================
 LOVE_PASSWORD = "27-04-2025"
-WHATSAPP_NUMBER = "91" + "7780265835"
-
 st.set_page_config(page_title="Only For Bujji ❤️", layout="centered")
 
 # ================= SESSION STATES =================
-if "unlock" not in st.session_state:
-    st.session_state.unlock = False
-if "show_memories" not in st.session_state:
-    st.session_state.show_memories = False
-if "said_yes" not in st.session_state:
-    st.session_state.said_yes = False
-if "love_message" not in st.session_state:
-    st.session_state.love_message = ""
+for key in ["unlock", "show_memories", "said_yes", "love_message"]:
+    if key not in st.session_state:
+        st.session_state[key] = False if key != "love_message" else ""
 
 # ================= PASSWORD =================
 if not st.session_state.unlock:
     st.markdown("""
     <style>
     body {background: linear-gradient(135deg,#ff9a9e,#fad0c4);}
-    .lock {
-        background: rgba(255,255,255,0.4);
-        padding: 30px;
-        border-radius: 25px;
-        text-align: center;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-    }
+    .lock {background:rgba(255,255,255,0.5);padding:30px;border-radius:25px;text-align:center;}
     </style>
     """, unsafe_allow_html=True)
 
-    st.markdown('<div class="lock"><h2>🔐 Private Love Space</h2><p>Only for Bujji ❤️</p></div>', unsafe_allow_html=True)
+    st.markdown("<div class='lock'><h2>🔐 Private Love Space</h2><p>Only for Bujji ❤️</p></div>", unsafe_allow_html=True)
     pwd = st.text_input("Enter secret password 💕", type="password")
 
     if st.button("💗 Unlock My Heart"):
@@ -52,31 +39,45 @@ st.markdown("""
 <style>
 body {background: linear-gradient(135deg,#ffecd2,#fcb69f);}
 @keyframes fall {0%{top:-10%}100%{top:110%}}
-.rose {position:fixed; top:-10%; font-size:22px; animation:fall linear infinite;}
+.rose {position:fixed;top:-10%;font-size:22px;animation:fall linear infinite;}
 @keyframes explode {0%{transform:scale(0)}100%{transform:scale(4);opacity:0}}
-.firework {position:fixed; font-size:28px; animation:explode 1.4s ease-out forwards;}
-.glass {
-  background: rgba(255,255,255,0.55);
-  backdrop-filter: blur(12px);
-  border-radius: 30px;
-  padding: 30px;
-  box-shadow: 0 20px 45px rgba(0,0,0,0.25);
-}
-.gallery {display:flex; overflow-x:auto; gap:25px;}
-.card {
-  min-width:260px;
-  background: linear-gradient(135deg,#ff9a9e,#fad0c4);
-  border-radius:25px; padding:12px;
-  box-shadow:0 15px 30px rgba(0,0,0,0.3);
-}
-.quote {text-align:center; font-style:italic; color:#7a003c; font-weight:600;}
+.firework {position:fixed;font-size:28px;animation:explode 1.4s ease-out forwards;}
+
+.glass {background:rgba(255,255,255,0.6);backdrop-filter:blur(12px);
+border-radius:30px;padding:30px;box-shadow:0 20px 45px rgba(0,0,0,0.25);}
+
+.gallery {display:flex;overflow-x:auto;gap:25px;}
+.card {min-width:260px;background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+border-radius:25px;padding:12px;box-shadow:0 15px 30px rgba(0,0,0,0.3);}
+.quote {text-align:center;font-style:italic;color:#7a003c;font-weight:600;}
+
 .neon button {
-  background: linear-gradient(135deg,#ff0844,#ffb199)!important;
-  color:white!important;
-  border-radius:30px!important;
-  font-size:18px!important;
-  padding:12px 30px!important;
-  box-shadow:0 0 25px #ff4d6d;
+background:linear-gradient(135deg,#ff0844,#ffb199)!important;
+color:white!important;border-radius:30px!important;
+font-size:18px!important;padding:12px 30px!important;
+box-shadow:0 0 25px #ff4d6d;}
+
+.arrow {font-size:28px;text-align:center;animation:bounce 1.2s infinite;}
+@keyframes bounce {0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+.heartbeat {
+font-size:80px;text-align:center;color:#ff0844;
+animation:beat 1s infinite;
+}
+@keyframes beat {
+0%{transform:scale(1)}
+25%{transform:scale(1.2)}
+40%{transform:scale(1)}
+60%{transform:scale(1.3)}
+100%{transform:scale(1)}
+}
+
+.yes-message {
+background:linear-gradient(135deg,#ffdde1,#ee9ca7);
+padding:25px;border-radius:25px;
+font-size:20px;font-weight:600;color:#7a003c;
+box-shadow:0 15px 40px rgba(0,0,0,0.25);
+text-align:center;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -84,22 +85,17 @@ body {background: linear-gradient(135deg,#ffecd2,#fcb69f);}
 # ================= ROSES =================
 for _ in range(15):
     st.markdown(
-        f'<div class="rose" style="left:{random.randint(0,100)}%;'
-        f'animation-duration:{random.randint(6,12)}s;">🌹</div>',
+        f"<div class='rose' style='left:{random.randint(0,100)}%;animation-duration:{random.randint(6,12)}s;'>🌹</div>",
         unsafe_allow_html=True
     )
 
 # ================= HEADER =================
 st.title("🎉 Happy New Year Bujji ❤️")
-
 st.markdown("""
 <div class="glass">
-<h3>Bujji 💕</h3>
-<p>
 This New Year isn’t about fireworks outside…<br>
 It’s about the fire you lit inside my heart ❤️<br><br>
 <b>I want a future with YOU.</b>
-</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -110,37 +106,33 @@ if st.button("📸 Our Memories"):
 st.markdown('</div>', unsafe_allow_html=True)
 
 if st.session_state.show_memories:
-    st.subheader("💞 Our Love Moments")
     quotes = [
-        "The moment my heart chose you ❤️",
+        "The moment my heart choose you ❤️",
         "My peace has your smile 💕",
         "You make life feel softer 💖",
         "Love looks like this 🌸",
         "Always you ❤️",
-        "You are my everything 🥹"
+        "You are my everything 🥹",
+        "Your presence make my day special",
+        "Be with me like this"
     ]
-    photos = sorted(os.listdir("photos"))
 
-    st.markdown('<div class="gallery">', unsafe_allow_html=True)
-    for i, photo in enumerate(photos):
-        st.markdown('<div class="card">', unsafe_allow_html=True)
-        st.image(Image.open(f"photos/{photo}"), use_container_width=True)
-        st.markdown(
-            f'<div class="quote">{quotes[i % len(quotes)]}</div>',
-            unsafe_allow_html=True
-        )
+    if os.path.exists("photos"):
+        photos = [p for p in os.listdir("photos") if p.lower().endswith(("jpg","png","jpeg","webp"))]
+        st.markdown('<div class="gallery">', unsafe_allow_html=True)
+        for i, photo in enumerate(photos):
+            st.markdown('<div class="card">', unsafe_allow_html=True)
+            st.image(Image.open(f"photos/{photo}"), use_container_width=True)
+            st.markdown(f"<div class='quote'>{quotes[i % len(quotes)]}</div>", unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
 
 # ================= PROPOSAL =================
 st.markdown("## 💍 My Question")
 st.markdown("""
 <div class="glass">
-<p>
-I don’t promise a fairytale,<br>
-I promise effort, loyalty, affection, care<br>
-and forever support — only for you Bujji ❤️
-</p>
+I promise effort, loyalty, care, love<br>
+and forever support — only for you Bujji ❤️<br><br>
 <b>Will you walk with me through this New Year and all the years ahead?</b>
 </div>
 """, unsafe_allow_html=True)
@@ -149,23 +141,30 @@ st.markdown('<div class="neon">', unsafe_allow_html=True)
 if st.button("💖 YES"):
     st.session_state.said_yes = True
 st.markdown('</div>', unsafe_allow_html=True)
+st.markdown('<div class="arrow">⬆️ Click YES with love ⬆️</div>', unsafe_allow_html=True)
 
-# ================= YES EFFECTS =================
+# ================= YES EFFECT =================
 if st.session_state.said_yes:
     for _ in range(25):
         st.markdown(
-            f'<div class="firework" style="left:{random.randint(10,90)}%;top:{random.randint(10,80)}%;">🎆</div>',
+            f"<div class='firework' style='left:{random.randint(10,90)}%;top:{random.randint(10,80)}%;'>🎆</div>",
             unsafe_allow_html=True
         )
-    st.success("She said YES 💍❤️")
 
-    # 💌 MESSAGE BOX
+    st.markdown("<div class='heartbeat'>❤️</div>", unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="yes-message">
+    You didn’t just click YES…<br>
+    You chose *us*, you chose *forever* 💍<br><br>
+    My heart will beat for you in every moment,<br>
+    every smile, every dream ❤️<br><br>
+    <b>Thank you for being my always, Bujji.</b>
+    </div>
+    """, unsafe_allow_html=True)
+
     st.subheader("💌 Message From Your Heart")
-    st.session_state.love_message = st.text_area(
-        "Write something for Karthik 💕",
-        placeholder="Write your feelings here...",
-        height=150
-    )
+    st.session_state.love_message = st.text_area("Write something for Karthik 💕")
 
 # ================= SIGNATURE =================
 st.subheader("✍️ Your Signature")
@@ -177,42 +176,27 @@ canvas_result = st_canvas(
     background_color="#fff0f5",
     height=200,
     drawing_mode="freedraw",
-    key="canvas",
+    key="canvas"
 )
 
 # ================= PDF =================
 if st.button("💝 Download Our Forever Promise"):
-    if canvas_result.image_data is None:
-        st.warning("Please sign first 🥹")
-    else:
+    if canvas_result.image_data is not None:
         Image.fromarray(canvas_result.image_data.astype("uint8")).save("signature.png")
-
         pdf = canvas.Canvas("Forever_With_You.pdf", pagesize=A4)
         pdf.setFont("Helvetica-Bold", 26)
         pdf.drawCentredString(300, 800, "FOREVER WITH YOU 💍")
-
-        pdf.setFont("Helvetica", 15)
+        pdf.setFont("Helvetica", 14)
         pdf.drawString(50, 740, "Karthik ❤️ Bujji")
-        pdf.drawString(50, 710, "Promise to love, respect and choose each other forever.")
-
-        pdf.drawString(50, 660, "Message from Bujji:")
-        y = 630
+        y = 700
         for line in textwrap.wrap(st.session_state.love_message, 80):
             pdf.drawString(50, y, line)
             y -= 18
-
-        pdf.drawString(50, y-20, "Signed by:")
-        pdf.drawString(50, y-45, name)
-        pdf.drawImage("signature.png", 50, y-140, width=240, height=120)
-
+        pdf.drawImage("signature.png", 50, y-120, width=240, height=120)
         pdf.save()
 
         with open("Forever_With_You.pdf", "rb") as f:
             st.download_button("⬇️ Download Forever PDF", f)
 
 # ================= FOOTER =================
-st.markdown("""
----
-🌈 **Made with endless love — Karthik**  
-💍 🌹 🎆
-""")
+st.markdown("---\n🌈 **Made with endless love — Karthik** 💍❤️")
