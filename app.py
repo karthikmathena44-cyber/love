@@ -19,7 +19,7 @@ if not st.session_state.unlock:
     st.markdown("""
     <style>
     body {background: linear-gradient(135deg,#ff9a9e,#fad0c4);}
-    .lock {background:rgba(255,255,255,0.5);padding:30px;border-radius:25px;text-align:center;}
+    .lock {background:rgba(255,255,255,0.6);padding:30px;border-radius:25px;text-align:center;}
     </style>
     """, unsafe_allow_html=True)
 
@@ -40,28 +40,45 @@ st.markdown("""
 body {background: linear-gradient(135deg,#ffecd2,#fcb69f);}
 @keyframes fall {0%{top:-10%}100%{top:110%}}
 .rose {position:fixed;top:-10%;font-size:22px;animation:fall linear infinite;}
-@keyframes explode {0%{transform:scale(0)}100%{transform:scale(4);opacity:0}}
-.firework {position:fixed;font-size:28px;animation:explode 1.4s ease-out forwards;}
-
-.glass {background:rgba(255,255,255,0.6);backdrop-filter:blur(12px);
-border-radius:30px;padding:30px;box-shadow:0 20px 45px rgba(0,0,0,0.25);}
 
 .gallery {display:flex;overflow-x:auto;gap:25px;}
 .card {min-width:260px;background:linear-gradient(135deg,#ff9a9e,#fad0c4);
 border-radius:25px;padding:12px;box-shadow:0 15px 30px rgba(0,0,0,0.3);}
 .quote {text-align:center;font-style:italic;color:#7a003c;font-weight:600;}
 
+.glass {
+background:rgba(255,255,255,0.6);
+backdrop-filter:blur(12px);
+border-radius:30px;
+padding:30px;
+box-shadow:0 20px 45px rgba(0,0,0,0.25);
+}
+
 .neon button {
 background:linear-gradient(135deg,#ff0844,#ffb199)!important;
-color:white!important;border-radius:30px!important;
-font-size:18px!important;padding:12px 30px!important;
-box-shadow:0 0 25px #ff4d6d;}
+color:white!important;
+border-radius:30px!important;
+font-size:18px!important;
+padding:12px 30px!important;
+box-shadow:0 0 25px #ff4d6d;
+}
 
-.arrow {font-size:28px;text-align:center;animation:bounce 1.2s infinite;}
-@keyframes bounce {0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.arrow {
+text-align:center;
+font-size:26px;
+animation:bounce 1.2s infinite;
+color:#ff0844;
+}
+
+@keyframes bounce {
+0%,100% {transform:translateY(0)}
+50% {transform:translateY(-10px)}
+}
 
 .heartbeat {
-font-size:80px;text-align:center;color:#ff0844;
+font-size:90px;
+text-align:center;
+color:#ff0844;
 animation:beat 1s infinite;
 }
 @keyframes beat {
@@ -74,10 +91,13 @@ animation:beat 1s infinite;
 
 .yes-message {
 background:linear-gradient(135deg,#ffdde1,#ee9ca7);
-padding:25px;border-radius:25px;
-font-size:20px;font-weight:600;color:#7a003c;
-box-shadow:0 15px 40px rgba(0,0,0,0.25);
+padding:30px;
+border-radius:30px;
+font-size:20px;
+font-weight:600;
+color:#7a003c;
 text-align:center;
+box-shadow:0 20px 40px rgba(0,0,0,0.3);
 }
 </style>
 """, unsafe_allow_html=True)
@@ -99,13 +119,14 @@ It’s about the fire you lit inside my heart ❤️<br><br>
 </div>
 """, unsafe_allow_html=True)
 
-# ================= MEMORIES =================
+# ================= MEMORIES BUTTON =================
+st.markdown('<div class="arrow">⬇️ Click here to see our memories ⬇️</div>', unsafe_allow_html=True)
 st.markdown('<div class="neon">', unsafe_allow_html=True)
 if st.button("📸 Our Memories"):
     st.session_state.show_memories = True
 st.markdown('</div>', unsafe_allow_html=True)
 
-if st.session_state.show_memories:
+if st.session_state.show_memories and os.path.exists("photos"):
     quotes = [
         "The moment my heart choose you ❤️",
         "My peace has your smile 💕",
@@ -117,54 +138,50 @@ if st.session_state.show_memories:
         "Be with me like this"
     ]
 
-    if os.path.exists("photos"):
-        photos = [p for p in os.listdir("photos") if p.lower().endswith(("jpg","png","jpeg","webp"))]
-        st.markdown('<div class="gallery">', unsafe_allow_html=True)
-        for i, photo in enumerate(photos):
-            st.markdown('<div class="card">', unsafe_allow_html=True)
-            st.image(Image.open(f"photos/{photo}"), use_container_width=True)
-            st.markdown(f"<div class='quote'>{quotes[i % len(quotes)]}</div>", unsafe_allow_html=True)
-            st.markdown('</div>', unsafe_allow_html=True)
+    photos = [p for p in os.listdir("photos") if p.lower().endswith(("jpg","png","jpeg","webp"))]
+    st.markdown('<div class="gallery">', unsafe_allow_html=True)
+    for i, photo in enumerate(photos):
+        st.markdown('<div class="card">', unsafe_allow_html=True)
+        st.image(Image.open(f"photos/{photo}"), use_container_width=True)
+        st.markdown(f"<div class='quote'>{quotes[i % len(quotes)]}</div>", unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # ================= PROPOSAL =================
 st.markdown("## 💍 My Question")
 st.markdown("""
 <div class="glass">
-I promise effort, loyalty, care, love<br>
-and forever support — only for you Bujji ❤️<br><br>
+I promise my love, loyalty, care, Effection, Support and respect.<br>
+Not just today — but every day for u Bujjilu❤️<br><br>
 <b>Will you walk with me through this New Year and all the years ahead?</b>
 </div>
 """, unsafe_allow_html=True)
 
+st.markdown('<div class="arrow">⬆️ Click YES from your heart ⬆️</div>', unsafe_allow_html=True)
 st.markdown('<div class="neon">', unsafe_allow_html=True)
 if st.button("💖 YES"):
     st.session_state.said_yes = True
 st.markdown('</div>', unsafe_allow_html=True)
-st.markdown('<div class="arrow">⬆️ Click YES with love ⬆️</div>', unsafe_allow_html=True)
 
 # ================= YES EFFECT =================
 if st.session_state.said_yes:
-    for _ in range(25):
-        st.markdown(
-            f"<div class='firework' style='left:{random.randint(10,90)}%;top:{random.randint(10,80)}%;'>🎆</div>",
-            unsafe_allow_html=True
-        )
-
     st.markdown("<div class='heartbeat'>❤️</div>", unsafe_allow_html=True)
 
     st.markdown("""
     <div class="yes-message">
-    You didn’t just click YES…<br>
-    You chose *us*, you chose *forever* 💍<br><br>
-    My heart will beat for you in every moment,<br>
-    every smile, every dream ❤️<br><br>
-    <b>Thank you for being my always, Bujji.</b>
+    You didn’t just click YES…<br><br>
+    You chose *us*, you chose *love*, you chose *forever* 💍❤️<br><br>
+    My heart feels safe, full, and complete because of you.<br><br>
+    <b>Thank you for choosing me, Bujji.<br>
+    I promise to choose you every single day.</b>
     </div>
     """, unsafe_allow_html=True)
 
     st.subheader("💌 Message From Your Heart")
-    st.session_state.love_message = st.text_area("Write something for Karthik 💕")
+    st.session_state.love_message = st.text_area(
+        "Write something for Karthik 💕",
+        placeholder="Write your feelings here..."
+    )
 
 # ================= SIGNATURE =================
 st.subheader("✍️ Your Signature")
