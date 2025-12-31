@@ -48,8 +48,9 @@ body {background: linear-gradient(135deg,#ffecd2,#fcb69f);}
   position:fixed;
   top:-10%;
   font-size:20px;
-  color:#ff0844;
+  color:#FFD700; /* Yellow */
   font-weight:bold;
+  text-shadow: 0 0 8px rgba(255,215,0,0.8);
   animation:fall linear infinite;
 }
 
@@ -246,3 +247,4 @@ if st.button("💝 Download Our Forever Promise"):
 
 # ================= FOOTER =================
 st.markdown("---\n🌈 **Made with endless love — Karthik** 💍❤️")
+
