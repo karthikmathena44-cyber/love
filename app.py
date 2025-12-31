@@ -36,9 +36,12 @@ if not st.session_state.unlock:
     </style>
     """, unsafe_allow_html=True)
 
-    st.markdown('<div class="lock"><h2>🔐 Private Love Space</h2><p>Only for Bujji ❤️</p></div>', unsafe_allow_html=True)
-    pwd = st.text_input("Enter secret password 💕", type="password")
+    st.markdown(
+        '<div class="lock"><h2>🔐 Private Love Space</h2><p>Only for Bujji ❤️</p></div>',
+        unsafe_allow_html=True
+    )
 
+    pwd = st.text_input("Enter secret password 💕", type="password")
     if st.button("💗 Unlock My Heart"):
         if pwd == LOVE_PASSWORD:
             st.session_state.unlock = True
@@ -69,7 +72,12 @@ body {background: linear-gradient(135deg,#ffecd2,#fcb69f);}
   border-radius:25px; padding:12px;
   box-shadow:0 15px 30px rgba(0,0,0,0.3);
 }
-.quote {text-align:center; font-style:italic; color:#7a003c; font-weight:600;}
+.quote {
+  text-align:center;
+  font-style:italic;
+  color:#7a003c;
+  font-weight:600;
+}
 .neon button {
   background: linear-gradient(135deg,#ff0844,#ffb199)!important;
   color:white!important;
@@ -111,20 +119,21 @@ st.markdown('</div>', unsafe_allow_html=True)
 
 if st.session_state.show_memories:
     st.subheader("💞 Our Love Moments")
+
     quotes = [
-        "The moment my heart choose you ❤️",
+        "The moment my heart chose you ❤️",
         "My peace has your smile 💕",
         "You make life feel softer 💖",
         "Love looks like this 🌸",
         "Always you ❤️",
         "You are my everything 🥹",
-        "Your presence make my day special",
-        "Be with me like this"
-        
+        "Your presence makes my day special",
+        "Be with me like this forever 💞"
     ]
-if not os.path.exists("photos"):
+
+    if not os.path.exists("photos"):
         st.warning("📂 Our memories folder is empty right now 💕")
-else:
+    else:
         photos = sorted([
             p for p in os.listdir("photos")
             if p.lower().endswith((".png", ".jpg", ".jpeg", ".webp"))
@@ -166,15 +175,16 @@ st.markdown('</div>', unsafe_allow_html=True)
 if st.session_state.said_yes:
     for _ in range(25):
         st.markdown(
-            f'<div class="firework" style="left:{random.randint(10,90)}%;top:{random.randint(10,80)}%;">🎆</div>',
+            f'<div class="firework" style="left:{random.randint(10,90)}%;'
+            f'top:{random.randint(10,80)}%;">🎆</div>',
             unsafe_allow_html=True
         )
+
     st.success("She said YES 💍❤️")
 
-    # 💌 MESSAGE BOX
     st.subheader("💌 Message From Your Heart")
     st.session_state.love_message = st.text_area(
-        "Write something for Me💕",
+        "Write something for me 💕",
         placeholder="Write your feelings here...",
         height=150
     )
@@ -228,6 +238,3 @@ st.markdown("""
 🌈 **Made with endless love — Karthik**  
 💍 🌹 🎆
 """)
-
-
-
