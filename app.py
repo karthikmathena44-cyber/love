@@ -2,6 +2,7 @@ import streamlit as st
 from PIL import Image
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
+from reportlab.lib.colors import pink, red, green, yellow, HexColor
 from streamlit_drawable_canvas import st_canvas
 import os, random, textwrap, urllib.parse
 
@@ -21,13 +22,7 @@ if not st.session_state.unlock:
     st.markdown("""
     <style>
     body {background: linear-gradient(135deg,#ff9a9e,#fad0c4);}
-    .lock {
-        background:rgba(255,255,255,0.6);
-        padding:30px;
-        border-radius:25px;
-        text-align:center;
-        box-shadow:0 15px 40px rgba(0,0,0,0.3);
-    }
+    .lock {background:rgba(255,255,255,0.6); padding:30px; border-radius:25px; text-align:center; box-shadow:0 15px 40px rgba(0,0,0,0.3);}
     </style>
     """, unsafe_allow_html=True)
 
@@ -130,7 +125,6 @@ st.markdown('</div>', unsafe_allow_html=True)
 # ================= YES EFFECT =================
 if st.session_state.said_yes:
     st.markdown("<div class='heartbeat'>❤️</div>", unsafe_allow_html=True)
-
     st.markdown("""
     <div class="yes-message">
     You didn’t just click YES…<br><br>
@@ -138,7 +132,6 @@ if st.session_state.said_yes:
     I promise to choose you every single day.
     </div>
     """, unsafe_allow_html=True)
-
     st.session_state.love_message = st.text_area(
         "💌 Write something for Karthik",
         placeholder="Your words will be saved in our forever agreement..."
@@ -147,7 +140,6 @@ if st.session_state.said_yes:
 # ================= SIGNATURE =================
 st.subheader("✍️ Sign Our Love Agreement")
 name = st.text_input("Your Name", "Bujji")
-
 canvas_result = st_canvas(
     stroke_width=3,
     stroke_color="#ff0844",
@@ -163,50 +155,59 @@ if st.button("💝 Create & Download Agreement PDF"):
         Image.fromarray(canvas_result.image_data.astype("uint8")).save("signature.png")
 
         pdf = canvas.Canvas("Forever_With_You.pdf", pagesize=A4)
+        width, height = A4
 
         # Title
-        pdf.setFont("Helvetica-Bold", 26)
-        pdf.drawCentredString(300, 800, "FOREVER LOVE AGREEMENT 💍")
+        pdf.setFont("Helvetica-Bold", 28)
+        pdf.setFillColor(HexColor("#FF1493"))
+        pdf.drawCentredString(width/2, height-80, "💖 FOREVER LOVE AGREEMENT 💖")
 
-        pdf.setFont("Helvetica", 15)
-        pdf.drawCentredString(300, 770, "Between Karthik ❤️ Bujji")
+        # Subtitle
+        pdf.setFont("Helvetica-Bold", 18)
+        pdf.setFillColor(HexColor("#FF69B4"))
+        pdf.drawCentredString(width/2, height-120, "Between Karthik ❤️ Bujji")
 
-        # Terms
-        y = 720
+        # Terms Header
+        y = height-160
         pdf.setFont("Helvetica-Bold", 16)
-        pdf.drawString(50, y, "💖 Love & Romantic Agreement Terms:")
+        pdf.setFillColor(red)
+        pdf.drawString(50, y, "💌 Love & Fun Agreement Terms:")
         y -= 30
 
+        # Funny Terms
         pdf.setFont("Helvetica", 14)
         terms = [
-            "1. If time is not given properly → 10,000 kisses penalty 💋",
-            "2. If promises are broken → 100,000 trillion love fine 💸",
-            "   (Fine payable only in hugs, cuddles & love 😄)",
-            "3. Missing a good morning message → Unlimited forehead kisses 😘",
-            "4. Fighting without reason → Kiss + tight hug mandatory 🤗",
-            "5. Agreement validity → Lifetime + all next lifetimes ♾️",
-            "6. Court of law → Only our hearts ❤️",
+            "1️⃣ No attention → 10,000 kisses penalty 💋",
+            "2️⃣ Break promise → 100,000 trillion hugs fine 💸",
+            "3️⃣ Skip good morning → Unlimited forehead kisses 😘",
+            "4️⃣ Fight without reason → Hug + Kiss mandatory 🤗",
+            "5️⃣ Validity → Lifetime + all next lifetimes ♾️",
+            "6️⃣ Court of law → Only our hearts ❤️",
             "",
-            "⚠️ Note: This agreement is made with love & affection only 😄"
+            "⚠️ Made with love only "
         ]
-
-        for t in terms:
-            pdf.drawString(50, y, t)
+        colors = [red, pink, green, HexColor("#FF6347"), HexColor("#FFD700"), red, pink, green]
+        for t, c in zip(terms, colors):
+            pdf.setFillColor(c)
+            pdf.drawString(60, y, t)
             y -= 20
 
-        # Love Message
+        # Heartfelt Message
         y -= 10
         pdf.setFont("Helvetica-Bold", 15)
-        pdf.drawString(50, y, "💌 Message from the Heart:")
+        pdf.setFillColor(HexColor("#FF1493"))
+        pdf.drawString(50, y, "💖 Personal Message from the Heart:")
         y -= 25
-
         pdf.setFont("Helvetica", 14)
+        pdf.setFillColor(HexColor("#7A003C"))
         for line in textwrap.wrap(st.session_state.love_message, 80):
             pdf.drawString(50, y, line)
             y -= 18
 
         # Signature
-        y -= 20
+        y -= 10
+        pdf.setFont("Helvetica-Bold", 14)
+        pdf.setFillColor(HexColor("#FF1493"))
         pdf.drawString(50, y, f"Signed by: {name}")
         pdf.drawImage("signature.png", 50, y-140, width=240, height=120)
 
@@ -222,11 +223,9 @@ if st.session_state.pdf_ready:
             file_name="Forever_With_You.pdf",
             mime="application/pdf"
         )
-
     message = "I signed our love agreement ❤️\nThis New Year I choose YOU 💍\nForever yours,\nBujji 💕"
     encoded = urllib.parse.quote(message)
     whatsapp_link = f"https://wa.me/{KARTHIK_WHATSAPP}?text={encoded}"
-
     st.markdown(f"""
     <div class="neon" style="text-align:center;">
       <a href="{whatsapp_link}" target="_blank">
@@ -238,4 +237,3 @@ if st.session_state.pdf_ready:
 # ================= FOOTER =================
 st.markdown("---")
 st.markdown("🌈 **Made with endless love — Karthik** 💍❤️")
-
