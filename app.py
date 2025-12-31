@@ -334,6 +334,18 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+    message = "I signed our love agreement ❤️\nThis New Year I choose YOU 💍\nForever yours,\nBujji 💕"
+    encoded = urllib.parse.quote(message)
+    whatsapp_link = f"https://wa.me/{KARTHIK_WHATSAPP}?text={encoded}"
+
+    st.markdown(f"""
+    <div class="neon" style="text-align:center;">
+      <a href="{whatsapp_link}" target="_blank">
+        <button>💚 Send Agreement Message to Karthik (WhatsApp)</button>
+      </a>
+    </div>
+    """, unsafe_allow_html=True)
+
 import urllib.parse
 
 def whatsapp_link():
@@ -352,21 +364,10 @@ Love you endlessly ❤️
     encoded = urllib.parse.quote(msg)
     return f"https://wa.me/917780265835?text={encoded}"
 
-    message = "I signed our love agreement ❤️\nThis New Year I choose YOU 💍\nForever yours,\nBujji 💕"
-    encoded = urllib.parse.quote(message)
-    whatsapp_link = f"https://wa.me/{KARTHIK_WHATSAPP}?text={encoded}"
-
-    st.markdown(f"""
-    <div class="neon" style="text-align:center;">
-      <a href="{whatsapp_link}" target="_blank">
-        <button>💚 Send Agreement Message to Karthik (WhatsApp)</button>
-      </a>
-    </div>
-    """, unsafe_allow_html=True)
-
 # ================= FOOTER =================
 st.markdown("---")
 st.markdown("🌈 **Made with endless love — Karthik** 💍❤️")
+
 
 
 
