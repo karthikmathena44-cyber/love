@@ -7,7 +7,7 @@ import os, random, textwrap, urllib.parse
 
 # ================= CONFIG =================
 LOVE_PASSWORD = "27-04-2025"
-KARTHIK_WHATSAPP = "91XXXXXXXXXX"  # <-- PUT YOUR NUMBER (NO +)
+KARTHIK_WHATSAPP = "7780265835"  # <-- PUT YOUR NUMBER (NO +)
 
 st.set_page_config(page_title="Only For Bujji ❤️", layout="centered")
 
@@ -282,3 +282,4 @@ if st.session_state.pdf_ready:
 # ================= FOOTER =================
 st.markdown("---")
 st.markdown("🌈 **Made with endless love — Karthik** 💍❤️")
+
