@@ -122,7 +122,7 @@ if st.session_state.show_memories:
         "Be with me like this"
         
     ]
-        if not os.path.exists("photos"):
+    if not os.path.exists("photos"):
         st.warning("📂 Our memories folder is empty right now 💕")
     else:
         photos = sorted([
@@ -228,4 +228,5 @@ st.markdown("""
 🌈 **Made with endless love — Karthik**  
 💍 🌹 🎆
 """)
+
 
