@@ -122,18 +122,27 @@ if st.session_state.show_memories:
         "Be with me like this"
         
     ]
-    photos = sorted(os.listdir("photos"))
+        if not os.path.exists("photos"):
+        st.warning("📂 Our memories folder is empty right now 💕")
+    else:
+        photos = sorted([
+            p for p in os.listdir("photos")
+            if p.lower().endswith((".png", ".jpg", ".jpeg", ".webp"))
+        ])
 
-    st.markdown('<div class="gallery">', unsafe_allow_html=True)
-    for i, photo in enumerate(photos):
-        st.markdown('<div class="card">', unsafe_allow_html=True)
-        st.image(Image.open(f"photos/{photo}"), use_container_width=True)
-        st.markdown(
-            f'<div class="quote">{quotes[i % len(quotes)]}</div>',
-            unsafe_allow_html=True
-        )
-        st.markdown('</div>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+        if len(photos) == 0:
+            st.info("✨ Add our photos to the 'photos' folder to see magic ✨")
+        else:
+            st.markdown('<div class="gallery">', unsafe_allow_html=True)
+            for i, photo in enumerate(photos):
+                st.markdown('<div class="card">', unsafe_allow_html=True)
+                st.image(Image.open(f"photos/{photo}"), use_container_width=True)
+                st.markdown(
+                    f'<div class="quote">{quotes[i % len(quotes)]}</div>',
+                    unsafe_allow_html=True
+                )
+                st.markdown('</div>', unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
 
 # ================= PROPOSAL =================
 st.markdown("## 💍 My Question")
@@ -219,3 +228,4 @@ st.markdown("""
 🌈 **Made with endless love — Karthik**  
 💍 🌹 🎆
 """)
+
