@@ -265,7 +265,12 @@ if st.button("💝 Create & Download Agreement PDF"):
 # ================= DOWNLOAD & WHATSAPP =================
 if st.session_state.pdf_ready:
     with open("Forever_With_You.pdf", "rb") as f:
-        st.download_button("⬇️ Download Signed Agreement (PDF)", f)
+        st.download_button(
+    label="⬇️ Download Signed Agreement (PDF)",
+    data=f,
+    file_name="Forever_With_You.pdf",
+    mime="application/pdf"
+)
 
     message = "I signed our love agreement ❤️\nThis New Year I choose YOU 💍\nForever yours,\nBujji 💕"
     encoded = urllib.parse.quote(message)
@@ -282,4 +287,5 @@ if st.session_state.pdf_ready:
 # ================= FOOTER =================
 st.markdown("---")
 st.markdown("🌈 **Made with endless love — Karthik** 💍❤️")
+
 
