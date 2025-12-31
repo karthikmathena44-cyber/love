@@ -172,9 +172,9 @@ if st.session_state.show_memories and os.path.exists("photos"):
     photos = sorted([p for p in os.listdir("photos") if p.lower().endswith(("jpg","png","jpeg","webp"))])
 
     quotes = [
-        "The moment my heart chose you ❤️",
+        "The moment my heart choose you ❤️",
         "Every smile of yours heals me 💕",
-        "You are my calm in chaos 🌸",
+        "Be with me like this 🌸",
         "Love looks perfect when it’s you 💖",
         "My favorite place is beside you 🥹",
         "You make my world softer 💫",
@@ -217,7 +217,7 @@ if st.session_state.said_yes:
     st.markdown("""
     <div class="yes-message">
     You didn’t just click YES…<br><br>
-    You chose *us*, *love*, and *forever* 💍❤️<br><br>
+    You choose *us*, *love*, and *forever* 💍❤️<br><br>
     I promise to choose you every single day.
     </div>
     """, unsafe_allow_html=True)
@@ -287,3 +287,4 @@ if st.session_state.pdf_ready:
 # ================= FOOTER =================
 st.markdown("---")
 st.markdown("🌈 **Made with endless love — Karthik** 💍❤️")
+
